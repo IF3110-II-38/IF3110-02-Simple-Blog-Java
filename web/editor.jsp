@@ -20,18 +20,9 @@
 <%
 	Class.forName("com.mysql.jdbc.Driver");
 	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog","simpleblog","simpleblog");
-	if (request.getParameter("id") != null) {
-		Statement st= con.createStatement();
-		ResultSet rs=st.executeQuery("SELECT * FROM posts WHERE ID='"+request.getParameter("id")+"';");
-		if (rs.next()) {
-			initialTitle = rs.getString("title");
-			initialContent = rs.getString("content");
-			description = title;
-			initialID = rs.getInt("id");
-		}
-	}
 	
 	if (request.getParameter("title") != null && request.getParameter("date") != null && request.getParameter("content") != null && request.getParameter("id") != null) {
+		out.println("<script>alert('2');</script>");
 		Statement st2= con.createStatement();
 		initialTitle = request.getParameter("title");
 		initialContent = request.getParameter("content");
@@ -39,6 +30,16 @@
 			ResultSet rs2=st2.executeQuery("INSERT INTO `simpleblog`.`posts` (`ID`, `title`, `date`, `content`) VALUES (NULL, '"+request.getParameter("title")+"', '"+request.getParameter("date")+"', '"+request.getParameter("content")+"');"); 
 		} else {
 			st2.executeUpdate("UPDATE `simpleblog`.`posts` SET `title` = '"+request.getParameter("title")+"', `date` = '"+request.getParameter("date")+"', `content` = '"+request.getParameter("content")+"' WHERE `posts`.`ID` =  '"+request.getParameter("id")+"';"); 
+		}
+	} else if (request.getParameter("id") != null) {
+		out.println("<script>alert('a');</script>");
+		Statement st= con.createStatement();
+		ResultSet rs=st.executeQuery("SELECT * FROM posts WHERE ID='"+request.getParameter("id")+"';");
+		if (rs.next()) {
+			initialTitle = rs.getString("title");
+			initialContent = rs.getString("content");
+			description = title;
+			initialID = rs.getInt("id");
 		}
 	}
 %>

@@ -17,7 +17,7 @@ Copyright (C) 2014 Arieza Dictatorship
 	if (request.getParameter("delete") != null) {
 		String id=request.getParameter("delete");
 		Statement st= con.createStatement();
-		ResultSet rs=st.executeQuery("DELETE FROM `simpleblog`.`posts` WHERE `posts`.`ID` = '"+id+"';"); 
+		st.executeUpdate("DELETE FROM `simpleblog`.`posts` WHERE `posts`.`ID` = '"+id+"';"); 
 	}
 	if (request.getParameter("publish") != null) {
 		String id=request.getParameter("publish");
@@ -67,7 +67,7 @@ Copyright (C) 2014 Arieza Dictatorship
 					ResultSet rs=st.executeQuery("SELECT * FROM posts"); 
 					
 					while(rs.next()) { %>
-					<% try { if (session.getValue("usertype").toString() == "2" || session.getValue("usertype").toString() == "3" || (session.getValue("usertype").toString() != "1" && rs.getInt("published") == 1 ) ) { %>
+					<% try { if (session.getValue("usertype").toString() == "2" || session.getValue("usertype").toString() == "3" || (session.getValue("usertype").toString() != "2" && rs.getInt("published") == 0 ) ||  rs.getInt("published") == 1) { %>
 					
 					<div class="item">
 						<div class='detail'>
@@ -88,7 +88,7 @@ Copyright (C) 2014 Arieza Dictatorship
 								<a href='#' onclick='delAsk("<% out.print(rs.getString("ID")); %>")'>Delete</a>
 								<% } } catch(Exception x2) {};%>
 								<% try { if (session.getValue("usertype").toString() != "3" && rs.getInt("published") == 0) { %>
-								<a href='#' onclick='pubask("<% out.print(rs.getString("ID")); %>")'>Publish</a>
+								<a href='#' onclick='pubAsk("<% out.print(rs.getString("ID")); %>")'>Publish</a>
 								<% } } catch(Exception x3) {};%>
 							</p>
 						</div>
@@ -145,7 +145,7 @@ Copyright (C) 2014 Arieza Dictatorship
 						function delAsk(id) {
 							var r = confirm("Are you sure you want to delete this post?");
 							if (r === true) {
-								document.getElementById("delForm" + id).submit();
+								document.getElementById("delform" + id).submit();
 							}
 						}
 						function pubAsk(id) {

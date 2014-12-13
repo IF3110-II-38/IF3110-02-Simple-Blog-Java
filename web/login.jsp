@@ -69,22 +69,22 @@ Copyright (C) 2014 Arieza Dictatorship
 		if (request.getParameter("makeadmin") != null) {
 			String id=request.getParameter("makeadmin");
 			Statement st= con.createStatement();
-			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '3' WHERE `users`.`name` =  '"+id+"';"); 
+			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '3' WHERE `users`.`name` = '"+id+"';"); 
 		}
 		if (request.getParameter("makeeditor") != null) {
 			String id=request.getParameter("makeeditor");
 			Statement st= con.createStatement();
-			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '2' WHERE `users`.`name` =  '"+id+"';"); 
+			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '2' WHERE `users`.`name` = '"+id+"';"); 
 		}
-		if (request.getParameter("makeuser") != null) {
-			String id=request.getParameter("makeuser");
+		if (request.getParameter("makeowner") != null) {
+			String id=request.getParameter("makeowner");
 			Statement st= con.createStatement();
-			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '1' WHERE `users`.`name` =  '"+id+"';"); 
+			st.executeUpdate("UPDATE `simpleblog`.`users` SET `type` = '1' WHERE `users`.`name` = '"+id+"';"); 
 		}
 		if (request.getParameter("nuke") != null) {
 			String id=request.getParameter("nuke");
 			Statement st= con.createStatement();
-			st.executeUpdate("DELETE `simpleblog`.`users` WHERE `users`.`name` =  '"+id+"';"); 
+			st.executeUpdate("DELETE FROM `simpleblog`.`users` WHERE `users`.`name` = '"+id+"';"); 
 		}
 		%>
 		<div class='center'>
@@ -125,7 +125,7 @@ Copyright (C) 2014 Arieza Dictatorship
 					<% } %>
 				</div>
 				
-				<% try { if (session.getValue("userid").toString() != "none" ) { %>
+					<% try { if (session.getValue("usertype").toString().equalsIgnoreCase("3")) { %>
 				<div class='content'><h1 class="left">ADMIN SCREEN</h1><table style="width: 100%"><thead><td>Username</td><td>Set...</td></thead>
 					<% Statement st= con.createStatement();
 					ResultSet rs=st.executeQuery("SELECT * FROM users");
