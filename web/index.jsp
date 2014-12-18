@@ -149,7 +149,7 @@ Copyright (C) 2014 Arieza Dictatorship
 							}
 						}
 						function pubAsk(id) {
-							var r = confirm("Are you sure you want to delete this post?");
+							var r = confirm("Are you sure you want to publish this post?");
 							if (r === true) {
 								document.getElementById("pubform" + id).submit();
 							}

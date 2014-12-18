@@ -22,12 +22,12 @@
 	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog","simpleblog","simpleblog");
 	
 	if (request.getParameter("title") != null && request.getParameter("date") != null && request.getParameter("content") != null && request.getParameter("id") != null) {
-		out.println("<script>alert('2');</script>");
+		out.println("<script>alert('id" + request.getParameter("id") + " ');</script>");
 		Statement st2= con.createStatement();
 		initialTitle = request.getParameter("title");
 		initialContent = request.getParameter("content");
-		if (request.getParameter("id") == "-1") {
-			ResultSet rs2=st2.executeQuery("INSERT INTO `simpleblog`.`posts` (`ID`, `title`, `date`, `content`) VALUES (NULL, '"+request.getParameter("title")+"', '"+request.getParameter("date")+"', '"+request.getParameter("content")+"');"); 
+		if (request.getParameter("id").equalsIgnoreCase("-1")) {
+			st2.executeUpdate("INSERT INTO `simpleblog`.`posts` (`ID`, `title`, `date`, `content`, `published`, `author`) VALUES (NULL, '"+request.getParameter("title")+"', '"+request.getParameter("date")+"', '"+request.getParameter("content")+"', 0, '" + session.getValue("userid").toString() + "');"); 
 		} else {
 			st2.executeUpdate("UPDATE `simpleblog`.`posts` SET `title` = '"+request.getParameter("title")+"', `date` = '"+request.getParameter("date")+"', `content` = '"+request.getParameter("content")+"' WHERE `posts`.`ID` =  '"+request.getParameter("id")+"';"); 
 		}

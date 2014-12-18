@@ -1,0 +1,356 @@
+<definitions name="Darieza\'s simpleblogDB" targetNamespace="com.herokuapp.simpleblogdarieza.wsdl">
+	<!-- definition of datatypes -->
+	<types>
+		<schema targetNamespace="com.herokuapp.simpleblogdarieza.xsd">
+			<element name="result">
+				<complexType>
+					<all>
+						<element name="value" type="int"/>
+					</all>
+				</complexType>
+			</element>
+			<complexType name="post">
+				<attribute name="id" type="int"></attribute>
+				<attribute name="judul" type="string"></attribute>
+				<attribute name="konten" type="string"></attribute>
+				<attribute name="tanggal" type="dateTime"></attribute>
+				<attribute name="isPublished" type="boolean"></attribute>
+			</complexType>
+			<element name="posts">
+				<sequence>
+					<element name="" type="post"
+						maxOccurs="unbounded" minOccurs="0">
+					</element>
+				</sequence>
+			</element>
+			<element name="user">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="title">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="date">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="content">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="postid">
+				<complexType>
+					<all>
+						<element name="value" type="int"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="author">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="commentid">
+				<complexType>
+					<all>
+						<element name="value" type="int"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="username">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="pass">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="role">
+				<complexType>
+					<all>
+						<element name="value" type="int"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="query">
+				<complexType>
+					<all>
+						<element name="value" type="string"/>
+					</all>
+				</complexType>
+			</element>
+			<element name="void">
+				<complexType>
+					<sequence/>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+	<!-- response messages -->
+	<message name="returns_result">
+		<part name="result" type="xsd:result"/>
+	</message>
+	<message name="returns_posts">
+		<part name="posts" type="xsd:posts"/>
+	</message>
+	<message name="returns_post">
+		<part name="post" type="xsd:post"/>
+	</message>
+	<!-- request messages -->
+	<message name="post_new">
+		<part name="user" type="xsd:user"/>
+		<part name="title" type="xsd:title"/>
+		<part name="date" type="xsd:date"/>
+		<part name="content" type="xsd:content"/>
+	</message>
+	<message name="post_list">
+		<part name="void" type="xsd:void"/>
+	</message>
+	<message name="post_view">
+		<part name="postid" type="xsd:postid"/>
+	</message>
+	<message name="post_publish">
+		<part name="postid" type="xsd:postid"/>
+	</message>
+	<message name="post_edit">
+		<part name="postid" type="xsd:postid"/>
+		<part name="user" type="xsd:user"/>
+		<part name="title" type="xsd:title"/>
+		<part name="date" type="xsd:date"/>
+		<part name="content" type="xsd:content"/>
+	</message>
+	<message name="post_del">
+		<part name="postid" type="xsd:postid"/>
+	</message>
+	<message name="comment_add">
+		<part name="postid" type="xsd:postid"/>
+		<part name="title" type="xsd:title"/>
+		<part name="author" type="xsd:author"/>
+		<part name="date" type="xsd:date"/>
+	</message>
+	<message name="comment_delete">
+		<part name="commentid" type="xsd:commentid"/>
+	</message>
+	<message name="user_login">
+		<part name="username" type="xsd:username"/>
+		<part name="pass" type="xsd:pass"/>
+	</message>
+	<message name="user_add">
+		<part name="username" type="xsd:username"/>
+		<part name="pass" type="xsd:pass"/>
+		<part name="role" type="xsd:role"/>
+	</message>
+	<message name="user_delete">
+		<part name="username" type="xsd:username"/>
+	</message>
+	<message name="user_edit">
+		<part name="username" type="xsd:username"/>
+		<part name="role" type="xsd:role"/>
+	</message>
+	<message name="search">
+		<part name="query" type="xsd:query"/>
+	</message>
+	<!-- server's services -->
+	<portType name="simpleblogDB">
+		<operation name="post_new">
+			<input message="tns:post_new"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="post_list">
+			<input message="tns:post_list"/>
+			<output message="tns:returns_posts"/>
+		</operation>
+		<operation name="post_view">
+			<input message="tns:post_view"/>
+			<output message="tns:returns_post"/>
+		</operation>
+		<operation name="post_publish">
+			<input message="tns:post_publish"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="post_edit">
+			<input message="tns:post_edit"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="post_del">
+			<input message="tns:post_del"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="comment_add">
+			<input message="tns:comment_add"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="comment_delete">
+			<input message="tns:comment_delete"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="user_login">
+			<input message="tns:user_login"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="user_add">
+			<input message="tns:user_add"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="user_delete">
+			<input message="tns:user_delete"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="user_edit">
+			<input message="tns:user_edit"/>
+			<output message="tns:returns_result"/>
+		</operation>
+		<operation name="search">
+			<input message="tns:search"/>
+			<output message="tns:returns_posts"/>
+		</operation>
+	</portType>
+	<!-- server encoding -->
+	<binding name="simpleblogDB_webservices" type="tns:simpleblogDB">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="post_new">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_new"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="post_list">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_list"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="post_view">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_view"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="post_publish">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_publish"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="post_edit">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_edit"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="post_del">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#post_del"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="comment_add">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#comment_add"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="comment_delete">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#comment_delete"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="user_login">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#user_login"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="user_add">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#user_add"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="user_delete">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#user_delete"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="user_edit">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#user_edit"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="search">
+			<soap:operation soapAction="urn:xmethods-delayed-quotes#search"/>
+			<input>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+	</binding>
+	<!-- access to service provider -->
+	<service name="simpleblog">
+		<port name="simpleblog_0" binding="simpleblogDB_webservices">
+			<soap:address location="http://simpleblogdarieza.herokuapp.com/api.php"/>
+		</port>
+	</service>
+</definitions>
